@@ -15,7 +15,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.deepPurple,
           primaryContainer: Color(0xFF01C9AD),
-          secondaryContainer: Colors.amberAccent,
+          secondaryContainer: Color(0xFFFDBE11),
+          primary: Color(0xFFF75B2B),
           surface: Color(0xFFF2EEE9),
         ),
         textTheme: TextTheme(
@@ -24,10 +25,17 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.bold,
             letterSpacing: -5,
           ),
-          titleSmall: const TextStyle(
+          titleLarge: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
+          titleSmall: TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
+          labelLarge: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w900,
+            letterSpacing: -0.5,
+          ),
+          bodySmall: TextStyle(letterSpacing: -0.5, fontSize: 14),
         ),
       ),
       home: Scaffold(body: Body()),
@@ -101,7 +109,7 @@ class Subtitle extends StatelessWidget {
               child: icon,
             ),
             SizedBox(width: 25),
-            Text(text, style: Theme.of(context).textTheme.titleSmall),
+            Text(text, style: Theme.of(context).textTheme.titleLarge),
           ],
         ),
       ),
@@ -187,7 +195,12 @@ class Header extends StatelessWidget {
               SizedBox(height: 30),
               Subtitle(
                 "DIGITAL MARKETING",
-                icon: Icon(Icons.search, color: Colors.black, size: 32),
+                icon: Icon(
+                  Icons.search_rounded,
+                  shadows: [],
+                  color: Colors.black,
+                  size: 32,
+                ),
                 isHeaderSubtitle: true,
               ),
             ],
@@ -204,8 +217,10 @@ class WorkExperienceSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Subtitle("WORK EXPERIENCE"),
+        SizedBox(height: 8),
         WorkExperienceItem(
           "Digital Marketer Intern | Thynk Unlimited",
           "2012 – 2013",
@@ -241,7 +256,27 @@ class WorkExperienceItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [Text(business), Text(years), Text(description)]);
+    return Container(
+      margin: EdgeInsets.fromLTRB(0, 15, 0, 15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 7,
+        children: [
+          Text(business, style: Theme.of(context).textTheme.titleSmall),
+          Text(
+            years,
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+          Text(
+            description,
+            style: Theme.of(context).textTheme.bodySmall,
+            textAlign: TextAlign.justify,
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -268,7 +303,10 @@ class RightColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [SizedBox(height: 50), PersonPicture()]);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [SizedBox(height: 50), PersonPicture(), AboutSection()],
+    );
   }
 }
 
@@ -278,11 +316,35 @@ class PersonPicture extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300,
+      width: 275,
       height: 400,
       decoration: BoxDecoration(
         color: Color(0xFFAB2733),
         borderRadius: BorderRadius.circular(20),
+      ),
+    );
+  }
+}
+
+class AboutSection extends StatelessWidget {
+  const AboutSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 290,
+      margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Subtitle("ABOUT ME"),
+          SizedBox(height: 20),
+          Text(
+            "I have been working in the digital marketing industry for more than nine years. I have many experiences working individually and as a team member. My principle in working is exposure because the core of digital marketing is all about how to increase the exposure of the promoted product. I am also a hard worker, strategic and result-driven person. I always keep the clients as the priority, so many of them feel comfortable working with me.",
+            textAlign: TextAlign.justify,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ],
       ),
     );
   }
